@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'awesome_print'
+require 'deliv/deploy'
+
+puts "Building deliv-deploy #{Deliv::Deploy::VERSION}.".white
+system('git pull origin master')
+system('gem build deliv-deploy.gemspec')
+system("gem install deliv-deploy-#{Deliv::Deploy::VERSION}.gem")
+puts 'Done.'.green

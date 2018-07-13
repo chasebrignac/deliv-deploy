@@ -1,0 +1,18 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  TargetRailsVersion: 5.2
+
+Documentation:
+  Enabled: false
+
+Lint/ScriptPermission:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 240
+
+Metrics/MethodLength:
+  Max: 20
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

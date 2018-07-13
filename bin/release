@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'awesome_print'
+require 'deliv/deploy'
+
+puts "Releasing deliv-deploy #{Deliv::Deploy::VERSION}.".white
+system('git pull origin master')
+system('git add --all')
+system(%(git commit -am 'Releasing #{Deliv::Deploy::VERSION}'))
+system('git push origin master')
+system('gem build deliv-deploy.gemspec')
+system("gem install deliv-deploy-#{Deliv::Deploy::VERSION}.gem")
+system("gem push deliv-deploy-#{Deliv::Deploy::VERSION}.gem")
+puts "Done. deliv-deploy #{Deliv::Deploy::VERSION} has been released.".green
