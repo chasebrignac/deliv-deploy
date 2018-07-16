@@ -23,8 +23,15 @@ You will need to have the following environmental variables set:
 
   * AWS_ACCESS_KEY_ID
   * AWS_SECRET_ACCESS_KEY
+  * AWS_REGION
   * AWS_OPSWORKS_STACK_ID
   * AWS_OPSWORKS_APP_ID
+
+## Release Gem
+
+TODO: delete old release stuff
+
+    $ rake release
 
 ## Acknowledgements
 

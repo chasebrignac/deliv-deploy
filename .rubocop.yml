@@ -14,5 +14,8 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 20
 
+Metrics/AbcSize:
+  Max: 20
+
 Style/FrozenStringLiteralComment:
   Enabled: false
