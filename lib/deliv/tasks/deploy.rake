@@ -2,28 +2,35 @@ require 'aws-sdk'
 
 namespace :deploy do
   desc 'Deploy staging'
-  task staging2: :environment do
-  end
 
-  task staging: :environment do
-    puts 'Starting staging...'.white
+  Deliv::Deploy.remote_environments.each do |environment|
+    task environment, [:branch] => :environment do |t, args|
+      puts "Starting #{environment}...".white
 
-    Deliv::Deploy.verify_env!
-    client = Aws::OpsWorks::Client.new
+      Deliv::Deploy.verify_env!
+      config = Deliv::Deploy::Config.new(environment)
 
-    git = Deliv::Deploy::Git.new('staging')
-    git.deploy
+      client = Aws::OpsWorks::Client.new
 
-    resp = client.create_deployment(
-      stack_id: 'be987488-25e0-405f-b5c2-7aee42dc3e84',
-      app_id: 'e30a40bf-7f06-42a4-a15f-01329ac3f605',
-      command: {
-        name: 'deploy'
-      },
-      comment: 'David Deployed Staging'
-    )
+      git = Deliv::Deploy::Git.new(environment)
+      git.deploy
 
-    ap resp
-    puts 'Deployed!'.green
+      resp = client.create_deployment(
+        stack_id: config.stack_id,
+        app_id: config.app_id,
+        command: {
+          name: 'deploy'
+        },
+        comment: "#{git.user_name} deployed to #{environment} at #{Time.current.iso8601}"
+      )
+
+      deployment_id = resp[:deployment_id]
+
+      if deployment_id.present?
+        puts "Deployed: #{deployment_id}".green
+      else
+        puts 'Error!'.red
+      end
+    end
   end
 end
