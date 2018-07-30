@@ -4,7 +4,7 @@ namespace :deploy do
   desc 'Deploy staging'
 
   Deliv::Deploy.remote_environments.each do |environment|
-    task environment, [:branch] => :environment do |t, args|
+    task environment, [:branch] => :environment do |_t, _args|
       puts "Starting #{environment}...".white
 
       Deliv::Deploy.verify_env!

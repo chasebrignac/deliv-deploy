@@ -20,7 +20,7 @@ module Deliv
     end
 
     def self.local_environments
-      [:test, :development]
+      %i[test development]
     end
 
     def self.remote_environments

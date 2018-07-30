@@ -7,7 +7,7 @@ module Deliv
         verify_environments!
       end
 
-      def method_missing(name, *args, &block)
+      def method_missing(name, *_args, &_block)
         OpenStruct.new(@config[@environment]).send(name)
       end
 
@@ -16,7 +16,7 @@ module Deliv
       def load!(filename = nil)
         @filename = filename || Rails.root.join('.deploy.yml') if defined?(Rails)
         file = File.read(@filename)
-        @config = YAML.load(file).with_indifferent_access
+        @config = YAML.safe_load(file).with_indifferent_access
       end
 
       def verify_environments!
